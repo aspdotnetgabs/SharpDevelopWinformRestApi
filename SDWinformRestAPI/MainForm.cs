@@ -25,75 +25,61 @@ namespace SDWinformRestAPI
 		
 		public MainForm()
 		{
-			InitializeComponent();
-			
-		}
-		
-		void BtnGetSongsClick(object sender, EventArgs e)
-		{
-			GetSongs();
-		}
-		
-		void BtnSaveClick(object sender, EventArgs e)
-		{
-			// Create the song object
-			var song = new Song();
-			song.Id = int.Parse(txtId.Text);
-			song.Title = txtTitle.Text;
-			song.Artist = txtArtist.Text;
-			song.Genre = txtGenre.Text;
-			
-			// Check if the song exists 			
-			var requestGet = new RestRequest("api/song/" + txtId.Text, Method.GET);
-			var responseGet = client.Execute<Song>(requestGet);
-			
-			if(responseGet.StatusCode == HttpStatusCode.OK)
-			{
-				// Song already exist, just update it!							
-				var requestPut = new RestRequest("/api/Song", Method.PUT);
-				requestPut.RequestFormat = DataFormat.Json;
-				requestPut.AddBody(song);
-				var responsePut = client.Execute(requestPut);
-				
-				if(responsePut.StatusCode == HttpStatusCode.OK)
-					MessageBox.Show("Successfully saved.");
-				else
-					MessageBox.Show("Saving failed.");		
-			}			
-			else
-			{	
-				// Add new song				
-				var requestPost = new RestRequest("/api/Song", Method.POST);
-				requestPost.RequestFormat = DataFormat.Json;
-				requestPost.AddBody(song);
-				var responsePost = client.Execute(requestPost);
-				
-				if(responsePost.StatusCode == HttpStatusCode.OK)
-					MessageBox.Show("Successfully saved.");
-				else
-					MessageBox.Show("Saving failed.");	
-				
-				GetSongs(); // Refresh binding source
-			}			
-				
+			InitializeComponent();			
 		}
 		
 		void GetSongs()
 		{
-			var request = new RestRequest("api/song", Method.GET);
+			var request = new RestRequest("/api/song", Method.GET);
 			var response = client.Execute<List<Song>>(request);
 			var songs = response.Data;
 			
 			bindingSource1.DataSource = songs;		
+		}		
+		
+		void BtnGetSongsClick(object sender, EventArgs e)
+		{
+			GetSongs();
+			bindingNavigator1.Enabled = true;
+			tabControl1.Enabled = true;
 		}
+		
+		void BtnSaveClick(object sender, EventArgs e)
+		{		
+			bindingSource1.EndEdit();			
+			var song = (Song)bindingSource1.Current; // Current row/record, Cast to Song type
+					
+			var request = new RestRequest("/api/Song");		
+			if(song.Id > 0)
+				// Song has Id, already exist, just update it!							
+				request.Method = Method.PUT;		
+			else
+				// Add new song							
+				request.Method = Method.POST;	
+
+			request.RequestFormat = DataFormat.Json;
+			request.AddBody(song);
+			var response = client.Execute(request);
+			
+			if(response.StatusCode == HttpStatusCode.OK)
+			{
+				MessageBox.Show("Successfully saved.");
+				GetSongs(); 
+			}				
+			else
+				MessageBox.Show("Saving failed.");			
+			
+		}	
 
 		void BindingNavigatorDeleteItemClick(object sender, EventArgs e)
 		{
 			var dialogResult = MessageBox.Show("Are you sure?", "Delete", MessageBoxButtons.YesNo);
 			if(dialogResult == DialogResult.Yes)
 			{
+				var song = (Song)bindingSource1.Current;
+				
 				// http://bernardgabon.somee.com/api/song/id
-				var requestDel = new RestRequest("/api/Song/" + txtId.Text, Method.DELETE);
+				var requestDel = new RestRequest("/api/Song/" + song.Id, Method.DELETE);
 				var responseDel = client.Execute(requestDel);
 				
 				if(responseDel.StatusCode == HttpStatusCode.OK)

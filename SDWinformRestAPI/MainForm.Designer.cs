@@ -127,6 +127,7 @@ namespace SDWinformRestAPI
 			// 
 			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Enabled = false;
 			this.tabControl1.Location = new System.Drawing.Point(12, 77);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
@@ -283,6 +284,7 @@ namespace SDWinformRestAPI
 			this.bindingNavigator1.BindingSource = this.bindingSource1;
 			this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
 			this.bindingNavigator1.DeleteItem = null;
+			this.bindingNavigator1.Enabled = false;
 			this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.bindingNavigatorMoveFirstItem,
 			this.bindingNavigatorMovePreviousItem,

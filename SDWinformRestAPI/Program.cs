@@ -16,6 +16,9 @@ namespace SDWinformRestAPI
 	/// </summary>
 	internal sealed class Program
 	{
+		// Global static variable
+		public static ApiUser ApiUser;
+		
 		/// <summary>
 		/// Program entry point.
 		/// </summary>

@@ -47,11 +47,11 @@ namespace SDWinformRestAPI
 		void BtnSaveClick(object sender, EventArgs e)
 		{		
 			bindingSource1.EndEdit();			
-			var song = (Song)bindingSource1.Current; // Current row/record, Cast to Song type
+			var song = (Song)bindingSource1.Current; // Current row/record, Cast to type Song
 					
 			var request = new RestRequest("/api/Song");		
 			if(song.Id > 0)
-				// Song has Id, already exist, just update it!							
+				// Song has Id, already exists, just update it!							
 				request.Method = Method.PUT;		
 			else
 				// Add new song							
@@ -64,7 +64,7 @@ namespace SDWinformRestAPI
 			if(response.StatusCode == HttpStatusCode.OK)
 			{
 				MessageBox.Show("Successfully saved.");
-				GetSongs(); 
+				GetSongs(); // refresh
 			}				
 			else
 				MessageBox.Show("Saving failed.");			
@@ -91,6 +91,12 @@ namespace SDWinformRestAPI
 					MessageBox.Show("Delete failed.");	
 			}
 					
+		}
+		
+		void BtnLoginDemoClick(object sender, EventArgs e)
+		{
+			var loginDemo = new LoginForm();
+			loginDemo.Show();
 		}
 				
 	}

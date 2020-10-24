@@ -45,6 +45,7 @@ namespace SDWinformRestAPI
 		private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
 		private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
 		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+		private System.Windows.Forms.Button btnLoginDemo;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -100,6 +101,7 @@ namespace SDWinformRestAPI
 			this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
+			this.btnLoginDemo = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -394,11 +396,22 @@ namespace SDWinformRestAPI
 			this.bindingNavigatorDeleteItem.Text = "Delete";
 			this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.BindingNavigatorDeleteItemClick);
 			// 
+			// btnLoginDemo
+			// 
+			this.btnLoginDemo.Location = new System.Drawing.Point(533, 34);
+			this.btnLoginDemo.Name = "btnLoginDemo";
+			this.btnLoginDemo.Size = new System.Drawing.Size(109, 23);
+			this.btnLoginDemo.TabIndex = 4;
+			this.btnLoginDemo.Text = "Login Demo...";
+			this.btnLoginDemo.UseVisualStyleBackColor = true;
+			this.btnLoginDemo.Click += new System.EventHandler(this.BtnLoginDemoClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(660, 385);
+			this.Controls.Add(this.btnLoginDemo);
 			this.Controls.Add(this.bindingNavigator1);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.btnGetSongs);
